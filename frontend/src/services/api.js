@@ -8,8 +8,8 @@ const api = axios.create({
 });
 
 // Execute code
-export const executeCode = async (code, language) => {
-  const response = await api.post('/execute', { code, language });
+export const executeCode = async (code, language, stdin = '') => {
+  const response = await api.post('/execute', { code, language, stdin });
   return response.data;
 };
 

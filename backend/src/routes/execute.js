@@ -5,7 +5,7 @@ const { executeCode } = require('../services/dockerService');
 // Execute code
 router.post('/', async (req, res) => {
   try {
-    const { code, language } = req.body;
+    const { code, language, stdin } = req.body;
 
     if (!code) {
       return res.status(400).json({ error: 'Code is required' });
@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
       });
     }
 
-    const result = await executeCode(code, language);
+    const result = await executeCode(code, language, stdin || '');
     res.json(result);
 
   } catch (error) {
