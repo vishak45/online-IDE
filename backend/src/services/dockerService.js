@@ -10,24 +10,24 @@ const LANGUAGE_CONFIG = {
   python: {
     image: 'online-ide-python',
     extension: '.py',
-    command: (filename) => ['python3', filename]
+    command: (filename) => ['sh', '-c', `python3 ${filename} < /code/stdin.txt`]
   },
   cpp: {
     image: 'online-ide-cpp',
     extension: '.cpp',
-    command: (filename) => ['sh', '-c', `g++ -o /tmp/output ${filename} && /tmp/output`]
+    command: (filename) => ['sh', '-c', `g++ -o /tmp/output ${filename} && /tmp/output < /code/stdin.txt`]
   },
   nodejs: {
     image: 'online-ide-nodejs',
     extension: '.js',
-    command: (filename) => ['node', filename]
+    command: (filename) => ['sh', '-c', `node ${filename} < /code/stdin.txt`]
   }
 };
 
 const EXECUTION_TIMEOUT = 30000; // 30 seconds
 const MEMORY_LIMIT = 128 * 1024 * 1024; // 128MB
 
-async function executeCode(code, language) {
+async function executeCode(code, language, stdin = '') {
   const config = LANGUAGE_CONFIG[language];
   
   if (!config) {
@@ -38,11 +38,13 @@ async function executeCode(code, language) {
   const tempDir = path.join(os.tmpdir(), 'online-ide', executionId);
   const filename = `main${config.extension}`;
   const filepath = path.join(tempDir, filename);
+  const stdinPath = path.join(tempDir, 'stdin.txt');
 
   try {
-    // Create temp directory and write code
+    // Create temp directory and write code + stdin
     await fs.mkdir(tempDir, { recursive: true });
     await fs.writeFile(filepath, code);
+    await fs.writeFile(stdinPath, stdin);
 
     // Create container
     const container = await docker.createContainer({

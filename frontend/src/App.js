@@ -42,6 +42,7 @@ function App() {
   const [code, setCode] = useState(DEFAULT_CODE.python);
   const [language, setLanguage] = useState('python');
   const [output, setOutput] = useState('');
+  const [stdin, setStdin] = useState('');
   const [isRunning, setIsRunning] = useState(false);
   const [currentFile, setCurrentFile] = useState(null);
   const [showFileManager, setShowFileManager] = useState(false);
@@ -58,7 +59,7 @@ function App() {
     setOutput('Running...\n');
 
     try {
-      const result = await executeCode(code, language);
+      const result = await executeCode(code, language, stdin);
       
       let outputText = '';
       if (result.output) {
@@ -77,7 +78,7 @@ function App() {
     } finally {
       setIsRunning(false);
     }
-  }, [code, language]);
+  }, [code, language, stdin]);
 
   const handleSave = useCallback(async () => {
     const fileName = prompt('Enter file name:', currentFile?.name || `main.${getExtension(language)}`);
@@ -174,6 +175,15 @@ function App() {
           />
         </div>
         <div className="output-container">
+          <div className="stdin-section">
+            <div className="stdin-header">Input (stdin)</div>
+            <textarea
+              className="stdin-input"
+              value={stdin}
+              onChange={(e) => setStdin(e.target.value)}
+              placeholder="Enter input values here (one per line)..."
+            />
+          </div>
           <OutputTerminal output={output} />
         </div>
       </main>
