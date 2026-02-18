@@ -28,11 +28,11 @@ A powerful online IDE that lets you write, run, and save code in Python, C++, an
 └─────────────────────────────────────────────────────────────────┘
 
     ┌──────────────┐         ┌──────────────┐      ┌────────────┐
-    │   Frontend   │────────▶│   Backend    │─────▶│  MongoDB   │
+    │   Frontend   │────────>│   Backend    │─────>│  MongoDB   │
     │    React     │         │  Express.js  │      │  Database  │
     └──────────────┘         └──────┬───────┘      └────────────┘
-         :3000                       │
-                                     ▼
+         :3000                      │
+                                    ▼
                         ┌────────────────────────┐
                         │    Docker Engine       │
                         ├────────────────────────┤
