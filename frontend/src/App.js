@@ -120,11 +120,13 @@ function App() {
     <div className="app">
       <header className="header">
         <div className="header-left">
-          <h1 className="logo">Online IDE</h1>
+          <h1 className="logo">CodeAnywhere</h1>
+          
           <span className="file-name">
             {currentFile ? currentFile.name : 'Untitled'}
           </span>
         </div>
+       
         <div className="header-center">
           <LanguageSelector 
             language={language} 
@@ -159,7 +161,14 @@ function App() {
           </button>
         </div>
       </header>
-
+<div style={{
+  margin:'auto',
+  padding:'10px',
+  fontWeight:'bold',
+}}>
+  <p>Yet another online code editor</p>
+  </div>
+  
       <main className="main">
         {showFileManager && (
           <FileManager 
