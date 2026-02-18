@@ -28,11 +28,11 @@ A powerful online IDE that lets you write, run, and save code in Python, C++, an
 └─────────────────────────────────────────────────────────────────┘
 
     ┌──────────────┐         ┌──────────────┐      ┌────────────┐
-    │   Frontend   │────────▶│   Backend    │─────▶│  MongoDB   │
+    │   Frontend   │────────>│   Backend    │─────>│  MongoDB   │
     │    React     │         │  Express.js  │      │  Database  │
     └──────────────┘         └──────┬───────┘      └────────────┘
-         :3000                       │
-                                     ▼
+         :3000                      │
+                                    ▼
                         ┌────────────────────────┐
                         │    Docker Engine       │
                         ├────────────────────────┤
@@ -63,7 +63,7 @@ A powerful online IDE that lets you write, run, and save code in Python, C++, an
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/online-IDE.git
+   git clone https://github.com/vishak45/online-IDE.git
    cd online-IDE
    ```
 
@@ -390,8 +390,8 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ## 📧 Support & Contact
 
-- **Issues**: Report bugs via [GitHub Issues](https://github.com/yourusername/online-IDE/issues)
-- **Discussions**: Join our [GitHub Discussions](https://github.com/yourusername/online-IDE/discussions)
+- **Issues**: Report bugs via [GitHub Issues](https://github.com/vishak45/online-IDE/issues)
+- **Discussions**: Join our [GitHub Discussions](https://github.com/vishak45/online-IDE/discussions)
 - **Email**: support@example.com
 
 ---
@@ -400,6 +400,6 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 **Made with ❤️ by the Online IDE Team**
 
-[GitHub](https://github.com/yourusername/online-IDE) • [Live Demo](https://online-ide.example.com)
+[GitHub](https://github.com/vishak45/online-IDE) • [Live Demo](https://online-ide.example.com)
 
 </div>
