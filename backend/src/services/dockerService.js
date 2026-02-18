@@ -106,7 +106,7 @@ async function executeCode(code, language, stdin = '') {
     return {
       success: false,
       output: '',
-      error: error.message,
+      error: "Server error please run again",
       exitCode: -1,
       executionId
     };
