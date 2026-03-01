@@ -1,9 +1,12 @@
 import React, { useState, useCallback } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import CodeEditor from './components/CodeEditor';
 import OutputTerminal from './components/OutputTerminal';
 import FileManager from './components/FileManager';
 import LanguageSelector from './components/LanguageSelector';
-import { executeCode, saveFile, getFile } from './services/api';
+import Login from './components/Login';
+import Register from './components/Register';
+import { executeCode, saveFile, getFile, getCurrentUser, logout } from './services/api';
 import './styles/App.css';
 
 const DEFAULT_CODE = {
@@ -38,7 +41,7 @@ console.log("Welcome to Online IDE!");
 `
 };
 
-function App() {
+function IDE() {
   const [code, setCode] = useState(DEFAULT_CODE.python);
   const [language, setLanguage] = useState('python');
   const [output, setOutput] = useState('');
@@ -46,6 +49,12 @@ function App() {
   const [isRunning, setIsRunning] = useState(false);
   const [currentFile, setCurrentFile] = useState(null);
   const [showFileManager, setShowFileManager] = useState(false);
+  const user = getCurrentUser();
+
+  const handleLogout = () => {
+    logout();
+    window.location.reload();
+  };
 
   const handleLanguageChange = useCallback((newLanguage) => {
     setLanguage(newLanguage);
@@ -115,7 +124,8 @@ function App() {
     setCode(DEFAULT_CODE[language]);
     setOutput('');
   }, [language]);
-
+  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [userDetails, setUserDetails] = useState(localStorage.getItem('user'));
   return (
     <div className="app">
       <header className="header">
@@ -136,7 +146,14 @@ function App() {
         <div className="header-right">
           <button 
             className="btn btn-secondary"
-            onClick={() => setShowFileManager(!showFileManager)}
+            onClick={() => {
+              if(!token) {
+                alert('Please login first');
+                window.location.href = '/login';
+              } else {
+                setShowFileManager(true);
+              }
+            }}
           >
             Files
           </button>
@@ -148,7 +165,14 @@ function App() {
           </button>
           <button 
             className="btn btn-secondary"
-            onClick={handleSave}
+            onClick={()=>{
+              if(!token) {
+                alert('Please login first');
+                window.location.href = '/login';
+              } else {
+                handleSave();
+              }
+            }}
           >
             Save
           </button>
@@ -159,6 +183,15 @@ function App() {
           >
             {isRunning ? 'Running...' : '▶ Run'}
           </button>
+          {user ? (
+            <button className="btn btn-secondary" onClick={handleLogout}>
+              Logout
+            </button>
+          ):(
+            <button className="btn btn-secondary" onClick={() => window.location.href = '/login'}>
+              Login
+            </button>
+          )}
         </div>
       </header>
 <div style={{
@@ -207,6 +240,19 @@ function getExtension(language) {
     nodejs: 'js'
   };
   return extensions[language] || 'txt';
+}
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/" element={<IDE />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;

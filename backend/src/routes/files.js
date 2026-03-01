@@ -5,8 +5,12 @@ const File = require('../models/File');
 // Get all files
 router.get('/', async (req, res) => {
   try {
-    const files = await File.find().sort({ updatedAt: -1 });
-    res.json(files);
+    const userId = req.query.userId;
+    if (userId) {
+      const files = await File.find({ userId }).sort({ updatedAt: -1 });
+      return res.json(files);
+    }
+    
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -28,13 +32,13 @@ router.get('/:id', async (req, res) => {
 // Create file
 router.post('/', async (req, res) => {
   try {
-    const { name, content, language } = req.body;
+    const { name, content, language, userId } = req.body;
     
     if (!name || !language) {
       return res.status(400).json({ error: 'Name and language are required' });
     }
 
-    const file = new File({ name, content, language });
+    const file = new File({ userId,name, content, language });
     await file.save();
     res.status(201).json(file);
   } catch (error) {
