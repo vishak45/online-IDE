@@ -13,6 +13,7 @@ A powerful online IDE that lets you write, run, and save code in Python, C++, an
 - **⚡ Real-time Output**: Instant console feedback and error messages
 - **📱 Responsive UI**: Optimized for desktop and tablet
 - **🔒 Safety First**: Non-root execution, memory limits, timeout protection
+- **🔐 User Authentication**: Register and login with JWT-based authentication
 
 ## 📸 Screenshots
 
@@ -98,6 +99,50 @@ REACT_APP_API_URL=http://localhost:5000/api npm start
 ```
 
 > **Note**: Requires MongoDB running locally or accessible via connection string
+
+### Option 3: AWS EC2 Deployment
+
+1. **Launch an EC2 instance** with Amazon Linux 2023 or Ubuntu 22.04 LTS
+
+2. **Configure Security Group** - Open ports:
+   - 22 (SSH)
+   - 80 (HTTP)
+   - 443 (HTTPS)
+   - 3000 (Frontend)
+   - 5000 (Backend)
+
+3. **Install Docker on EC2**
+   ```bash
+   # Update system
+   sudo yum update -y   # Amazon Linux
+   # or: sudo apt update && sudo apt upgrade -y   # Ubuntu
+
+   # Install Docker
+   sudo yum install docker -y   # Amazon Linux
+   # or: sudo apt install docker.io -y   # Ubuntu
+
+   # Start Docker
+   sudo systemctl start docker
+   sudo systemctl enable docker
+   sudo usermod -aG docker $USER
+
+   # Install Docker Compose
+   sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+   sudo chmod +x /usr/local/bin/docker-compose
+   ```
+
+4. **Clone and Run**
+   ```bash
+   git clone https://github.com/vishak45/online-IDE.git
+   cd online-IDE
+   docker compose up -d --build
+   ```
+
+5. **Access the application**
+   - Frontend: `http://<EC2-PUBLIC-IP>:3000`
+   - Backend API: `http://<EC2-PUBLIC-IP>:5000`
+
+> **Tip**: For production, set up Nginx as a reverse proxy with SSL certificates.
 
 ## 📖 Usage Guide
 
@@ -216,6 +261,48 @@ Content-Type: application/json
 DELETE /api/files/:id
 ```
 
+---
+
+### Authentication
+
+#### Register User
+```http
+POST /api/auth/register
+Content-Type: application/json
+
+{
+  "username": "johndoe",
+  "email": "john@example.com",
+  "password": "securepassword123"
+}
+```
+
+#### Login User
+```http
+POST /api/auth/login
+Content-Type: application/json
+
+{
+  "email": "john@example.com",
+  "password": "securepassword123"
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "id": "507f1f77bcf86cd799439011",
+    "username": "johndoe",
+    "email": "john@example.com"
+  }
+}
+```
+
+> **Note**: Include the JWT token in the `Authorization` header for protected routes: `Bearer <token>`
+
 ## 📁 Project Structure
 
 ```
@@ -224,19 +311,23 @@ online-IDE/
 ├── 📄 README.md                 # This file
 ├── backend/                     # Express.js backend server
 │   ├── Dockerfile
+│   ├── .dockerignore            # Docker build exclusions
 │   ├── package.json
 │   └── src/
 │       ├── server.js            # Main Express application
 │       ├── models/
 │       │   ├── File.js          # MongoDB file schema
-│       │   └── userModel.js     # User schema (future)
+│       │   └── userModel.js     # User authentication schema
 │       ├── routes/
+│       │   ├── auth.js          # Authentication endpoints
 │       │   ├── execute.js       # Code execution endpoints
 │       │   └── files.js         # File CRUD endpoints
 │       └── services/
+│           ├── authService.js   # JWT authentication service
 │           └── dockerService.js # Docker container management
 ├── frontend/                    # React application
 │   ├── Dockerfile
+│   ├── .dockerignore            # Docker build exclusions
 │   ├── nginx.conf               # Production server config
 │   ├── package.json
 │   ├── public/
@@ -248,11 +339,14 @@ online-IDE/
 │       │   ├── CodeEditor.js    # Monaco Editor wrapper
 │       │   ├── OutputTerminal.js# Output display
 │       │   ├── FileManager.js   # File browser
-│       │   └── LanguageSelector.js  # Language picker
+│       │   ├── LanguageSelector.js  # Language picker
+│       │   ├── Login.js         # User login component
+│       │   └── Register.js      # User registration component
 │       ├── services/
 │       │   └── api.js           # HTTP client
 │       └── styles/
 │           ├── App.css          # Main styles
+│           ├── Auth.css         # Authentication styles
 │           └── index.css        # Global styles
 └── Docker/                      # Execution environments
     ├── python/

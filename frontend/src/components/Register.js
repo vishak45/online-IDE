@@ -57,7 +57,7 @@ function Register() {
       <div className="auth-card">
         <div className="auth-header">
           <h1>Register</h1>
-          <p>Create your Online IDE account</p>
+          <p>Create your CodeAnywhere account</p>
         </div>
 
         <form onSubmit={handleSubmit} className="auth-form">
