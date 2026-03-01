@@ -44,7 +44,7 @@ function Login() {
       <div className="auth-card">
         <div className="auth-header">
           <h1>Login</h1>
-          <p>Welcome back to Online IDE</p>
+          <p>Welcome back to  CodeAnywhere</p>
         </div>
 
         <form onSubmit={handleSubmit} className="auth-form">
