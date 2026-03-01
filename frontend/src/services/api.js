@@ -7,6 +7,36 @@ const api = axios.create({
   timeout: 60000 // 60 seconds for code execution
 });
 
+// Add token to requests if it exists
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+// Auth operations
+export const login = async (email, password) => {
+  const response = await api.post('/auth/login', { email, password });
+  return response.data;
+};
+
+export const register = async (name, email, password) => {
+  const response = await api.post('/auth/register', { name, email, password });
+  return response.data;
+};
+
+export const logout = () => {
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+};
+
+export const getCurrentUser = () => {
+  const user = localStorage.getItem('user');
+  return user ? JSON.parse(user) : null;
+};
+
 // Execute code
 export const executeCode = async (code, language, stdin = '') => {
   const response = await api.post('/execute', { code, language, stdin });
@@ -15,7 +45,9 @@ export const executeCode = async (code, language, stdin = '') => {
 
 // File operations
 export const getFiles = async () => {
-  const response = await api.get('/files');
+  const user = getCurrentUser();
+  const userId = user?.id;
+  const response = await api.get('/files', { params: { userId } });
   return response.data;
 };
 
@@ -25,11 +57,13 @@ export const getFile = async (id) => {
 };
 
 export const saveFile = async ({ id, name, content, language }) => {
+  const user = getCurrentUser();
+  const userId = user?.id;
   if (id) {
     const response = await api.put(`/files/${id}`, { name, content, language });
     return response.data;
   } else {
-    const response = await api.post('/files', { name, content, language });
+    const response = await api.post('/files', { name, content, language, userId });
     return response.data;
   }
 };
