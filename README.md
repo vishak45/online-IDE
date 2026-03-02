@@ -30,6 +30,10 @@ A powerful online IDE that lets you write, run, and save code in Python, C++, an
 ![Online IDE Editor](screenshots/op.png)
 
 
+## GitHub Integration
+![Online IDE Editor 2](screenshots/op2.png)
+
+
 ## 🏗️ Architecture
 
 ```
@@ -46,11 +50,16 @@ A powerful online IDE that lets you write, run, and save code in Python, C++, an
                     ┌───────────────┼───────────────┐
                     │               │               │
                     ▼               ▼               ▼
-            ┌────────────┐  ┌────────────┐  ┌────────────┐
-            │   Docker   │  │   GitHub   │  │   Lemon    │
-            │  Execution │  │   OAuth    │  │  Squeezy   │
-            └────────────┘  └────────────┘  └────────────┘
-                 :5000
+     ┌─────────────────────┐ ┌────────────┐  ┌────────────┐
+     │   Docker Execution  │ │   GitHub   │  │   Lemon    │
+     │  ┌───────────────┐  │ │   OAuth    │  │  Squeezy   │
+     │  │Python │ C++   │  │ └────────────┘  └────────────┘
+     │  │ 3.11  │GCC 13 │  │
+     │  ├───────┴───────┤  │
+     │  │   Node.js 20  │  │
+     │  └───────────────┘  │
+     └─────────────────────┘
+              :5000
 
 ```
 
