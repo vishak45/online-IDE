@@ -13,6 +13,23 @@ const userSchema= new mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    plan: {
+        type: String,
+        enum: ['free', 'premium'],
+        default: 'free'
+    },
+    githubAccessToken: {
+        type: String,
+        default: null
+    },
+    githubUsername: {
+        type: String,
+        default: null
+    },
+    premiumPurchasedAt: {
+        type: Date,
+        default: null
     }
 });
 

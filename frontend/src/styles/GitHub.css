@@ -1,0 +1,203 @@
+/* GitHub Modal Styles */
+.github-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.github-modal {
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.github-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.github-modal-header h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 18px;
+  color: var(--text-primary);
+}
+
+.github-modal-header svg {
+  color: var(--text-primary);
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.close-btn:hover {
+  color: var(--text-primary);
+}
+
+.github-modal-content {
+  padding: 20px;
+  overflow-y: auto;
+  max-height: calc(80vh - 60px);
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-secondary);
+}
+
+/* Connect Section */
+.github-connect-section {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.github-connect-section p {
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+.btn-github {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background-color: #24292e;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-github:hover {
+  background-color: #2f363d;
+}
+
+.btn-github svg {
+  fill: white;
+}
+
+/* Push Section */
+.github-push-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.github-user-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background-color: var(--bg-tertiary);
+  border-radius: 6px;
+}
+
+.connected-badge {
+  color: #27ca40;
+  font-weight: 500;
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.btn-link:hover {
+  color: var(--text-primary);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.repo-select,
+.commit-input {
+  padding: 10px 12px;
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.repo-select:focus,
+.commit-input:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+}
+
+.file-preview {
+  padding: 10px 12px;
+  background-color: var(--bg-tertiary);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-family: monospace;
+}
+
+.btn-push {
+  margin-top: 8px;
+  padding: 12px;
+  width: 100%;
+}
+
+/* Header GitHub Button */
+.btn-github-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background-color: #24292e;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-github-header:hover {
+  background-color: #2f363d;
+}
+
+.btn-github-header svg {
+  fill: white;
+}
