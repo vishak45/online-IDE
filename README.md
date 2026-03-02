@@ -6,6 +6,7 @@ A powerful online IDE that lets you write, run, and save code in Python, C++, an
 
 ## ✨ Features
 
+### Core Features
 - **🎨 Monaco Editor**: Professional syntax highlighting and autocomplete (same engine as VS Code)
 - **🌐 Multi-language Support**: Python 3.11 | C++ (GCC 13) | Node.js 20
 - **🐳 Docker Isolation**: Secure, containerized execution with resource limits
@@ -14,6 +15,14 @@ A powerful online IDE that lets you write, run, and save code in Python, C++, an
 - **📱 Responsive UI**: Optimized for desktop and tablet
 - **🔒 Safety First**: Non-root execution, memory limits, timeout protection
 - **🔐 User Authentication**: Register and login with JWT-based authentication
+
+### Premium Features
+- **🐙 GitHub Integration**: Push code directly to your GitHub repositories
+- **📂 Multiple Repositories**: Connect and manage multiple GitHub repos
+- **⏱️ Extended Execution**: 120 seconds timeout (vs 30s for free)
+- **💪 Higher Memory**: 512MB limit (vs 128MB for free)
+- **♾️ Unlimited Storage**: No file storage limits
+- **💳 Lemon Squeezy Payment**: Secure payment processing
 
 ## 📸 Screenshots
 
@@ -33,16 +42,16 @@ A powerful online IDE that lets you write, run, and save code in Python, C++, an
     │    React     │         │  Express.js  │      │  Database  │
     └──────────────┘         └──────┬───────┘      └────────────┘
          :3000                      │
-                                    ▼
-                        ┌────────────────────────┐
-                        │    Docker Engine       │
-                        ├────────────────────────┤
-                        │ ┌──────┬──────┬──────┐ │
-                        │ │Python│ C++  │Node  │ │
-                        │ │ 3.11 │ GCC13│  20  │ │
-                        │ └──────┴──────┴──────┘ │
-                        └────────────────────────┘
-                              :5000
+                                    │
+                    ┌───────────────┼───────────────┐
+                    │               │               │
+                    ▼               ▼               ▼
+            ┌────────────┐  ┌────────────┐  ┌────────────┐
+            │   Docker   │  │   GitHub   │  │   Lemon    │
+            │  Execution │  │   OAuth    │  │  Squeezy   │
+            └────────────┘  └────────────┘  └────────────┘
+                 :5000
+
 ```
 
 **Technology Stack:**
@@ -50,6 +59,8 @@ A powerful online IDE that lets you write, run, and save code in Python, C++, an
 - **Backend**: Node.js, Express.js, MongoDB, Docker API
 - **Execution**: Docker containers with resource isolation
 - **Database**: MongoDB for persistent file storage
+- **Payment**: Lemon Squeezy (test mode available)
+- **OAuth**: GitHub OAuth for repository access
 
 ## ⚙️ Prerequisites
 
@@ -57,6 +68,43 @@ A powerful online IDE that lets you write, run, and save code in Python, C++, an
 - **Git** (for cloning the repository)
 - **8GB RAM** minimum (for running containers)
 - **Port availability**: 3000 (frontend), 5000 (backend)
+
+## 🔧 Environment Setup
+
+Create a `.env` file in the project root:
+
+```env
+# GitHub OAuth (FREE - for premium GitHub features)
+# Get from: https://github.com/settings/developers
+GITHUB_CLIENT_ID=your_github_client_id
+GITHUB_CLIENT_SECRET=your_github_client_secret
+
+# Lemon Squeezy (FREE test mode - for payments)
+# Get from: https://app.lemonsqueezy.com/settings/api
+LEMONSQUEEZY_API_KEY=your_api_key
+LEMONSQUEEZY_STORE_ID=your_store_id
+LEMONSQUEEZY_VARIANT_ID=your_variant_id
+```
+
+### GitHub OAuth Setup
+
+1. Go to [GitHub Developer Settings](https://github.com/settings/developers)
+2. Click **New OAuth App**
+3. Fill in:
+   - **Application name**: Online IDE
+   - **Homepage URL**: `http://localhost:3000`
+   - **Authorization callback URL**: `http://localhost:5000/api/github/callback`
+4. Copy **Client ID** and **Client Secret** to `.env`
+
+### Lemon Squeezy Setup (Optional)
+
+1. Sign up at [Lemon Squeezy](https://lemonsqueezy.com)
+2. Create a Store and Product
+3. Enable **Test Mode** for development
+4. Get API Key from Settings → API
+5. Get Store ID and Variant ID from your product
+
+> **Note**: You can skip Lemon Squeezy and use the "Demo Upgrade" button for testing.
 
 ## 🚀 Quick Start
 
@@ -167,6 +215,24 @@ REACT_APP_API_URL=http://localhost:5000/api npm start
 | `Ctrl+S` / `Cmd+S` | Save file |
 | `Ctrl+Enter` | Execute code |
 | `Ctrl+/` | Toggle comment |
+
+### GitHub Integration (Premium)
+
+1. **Upgrade to Premium**
+   - Click the **GitHub** button in the toolbar
+   - If on free plan, payment modal appears
+   - Click **Demo Upgrade** (for testing) or **Pay with Lemon Squeezy**
+
+2. **Connect GitHub**
+   - After upgrading, click **GitHub** again
+   - Click **Connect GitHub Account**
+   - Authorize the OAuth app on GitHub
+
+3. **Push to Repository**
+   - Select a repository from the dropdown
+   - Enter a commit message
+   - Click **Push to GitHub**
+   - Your code is pushed to the selected repo!
 
 ## 🔌 API Reference
 
@@ -303,12 +369,106 @@ Content-Type: application/json
 
 > **Note**: Include the JWT token in the `Authorization` header for protected routes: `Bearer <token>`
 
+---
+
+### Payment (Premium)
+
+#### Get User Plan
+```http
+GET /api/payment/plan
+Authorization: Bearer <token>
+```
+
+**Response:**
+```json
+{
+  "plan": "free",
+  "status": true
+}
+```
+
+#### Create Checkout (Lemon Squeezy)
+```http
+POST /api/payment/create-checkout
+Authorization: Bearer <token>
+```
+
+**Response:**
+```json
+{
+  "checkoutUrl": "https://online-ide.lemonsqueezy.com/checkout/...",
+  "status": true
+}
+```
+
+#### Demo Upgrade (Testing)
+```http
+POST /api/payment/demo-upgrade
+Authorization: Bearer <token>
+```
+
+---
+
+### GitHub Integration (Premium)
+
+#### Get GitHub Auth URL
+```http
+GET /api/github/auth-url
+Authorization: Bearer <token>
+```
+
+**Response:**
+```json
+{
+  "authUrl": "https://github.com/login/oauth/authorize?...",
+  "status": true
+}
+```
+
+#### Check GitHub Status
+```http
+GET /api/github/status
+Authorization: Bearer <token>
+```
+
+**Response:**
+```json
+{
+  "connected": true,
+  "username": "johndoe",
+  "status": true
+}
+```
+
+#### List Repositories
+```http
+GET /api/github/repos
+Authorization: Bearer <token>
+```
+
+#### Push to Repository
+```http
+POST /api/github/push
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "owner": "johndoe",
+  "repo": "my-repo",
+  "filePath": "main.py",
+  "content": "print('Hello')",
+  "commitMessage": "Update from Online IDE",
+  "branch": "main"
+}
+```
+
 ## 📁 Project Structure
 
 ```
 online-IDE/
 ├── 📄 docker-compose.yml        # Docker orchestration configuration
 ├── 📄 README.md                 # This file
+├── 📄 .env                      # Environment variables (create this)
 ├── backend/                     # Express.js backend server
 │   ├── Dockerfile
 │   ├── .dockerignore            # Docker build exclusions
@@ -321,10 +481,13 @@ online-IDE/
 │       ├── routes/
 │       │   ├── auth.js          # Authentication endpoints
 │       │   ├── execute.js       # Code execution endpoints
-│       │   └── files.js         # File CRUD endpoints
+│       │   ├── files.js         # File CRUD endpoints
+│       │   ├── github.js        # GitHub OAuth & push endpoints
+│       │   └── payment.js       # Payment/premium endpoints
 │       └── services/
 │           ├── authService.js   # JWT authentication service
-│           └── dockerService.js # Docker container management
+│           ├── dockerService.js # Docker container management
+│           └── githubService.js # GitHub API integration
 ├── frontend/                    # React application
 │   ├── Dockerfile
 │   ├── .dockerignore            # Docker build exclusions
@@ -341,12 +504,16 @@ online-IDE/
 │       │   ├── FileManager.js   # File browser
 │       │   ├── LanguageSelector.js  # Language picker
 │       │   ├── Login.js         # User login component
-│       │   └── Register.js      # User registration component
+│       │   ├── Register.js      # User registration component
+│       │   ├── GitHubConnect.js # GitHub integration modal
+│       │   └── PaymentModal.js  # Premium upgrade modal
 │       ├── services/
 │       │   └── api.js           # HTTP client
 │       └── styles/
 │           ├── App.css          # Main styles
 │           ├── Auth.css         # Authentication styles
+│           ├── GitHub.css       # GitHub modal styles
+│           ├── Payment.css      # Payment modal styles
 │           └── index.css        # Global styles
 └── Docker/                      # Execution environments
     ├── python/
