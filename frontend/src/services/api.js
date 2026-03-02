@@ -37,6 +37,10 @@ export const getCurrentUser = () => {
   return user ? JSON.parse(user) : null;
 };
 
+export const updateStoredUser = (user) => {
+  localStorage.setItem('user', JSON.stringify(user));
+};
+
 // Execute code
 export const executeCode = async (code, language, stdin = '') => {
   const response = await api.post('/execute', { code, language, stdin });
@@ -70,6 +74,60 @@ export const saveFile = async ({ id, name, content, language }) => {
 
 export const deleteFile = async (id) => {
   const response = await api.delete(`/files/${id}`);
+  return response.data;
+};
+
+// Payment operations
+export const getUserPlan = async () => {
+  const response = await api.get('/payment/plan');
+  return response.data;
+};
+
+export const createCheckout = async () => {
+  const response = await api.post('/payment/create-checkout');
+  return response.data;
+};
+
+export const verifyPayment = async (paymentData) => {
+  const response = await api.post('/payment/verify', paymentData);
+  return response.data;
+};
+
+export const demoUpgrade = async () => {
+  const response = await api.post('/payment/demo-upgrade');
+  return response.data;
+};
+
+// GitHub operations
+export const getGitHubStatus = async () => {
+  const response = await api.get('/github/status');
+  return response.data;
+};
+
+export const getGitHubAuthUrl = async () => {
+  const response = await api.get('/github/auth-url');
+  return response.data;
+};
+
+export const disconnectGitHub = async () => {
+  const response = await api.post('/github/disconnect');
+  return response.data;
+};
+
+export const getGitHubRepos = async () => {
+  const response = await api.get('/github/repos');
+  return response.data;
+};
+
+export const createGitHubRepo = async (name, isPrivate = false, description = '') => {
+  const response = await api.post('/github/repos', { name, isPrivate, description });
+  return response.data;
+};
+
+export const pushToGitHub = async ({ owner, repo, filePath, content, commitMessage, branch }) => {
+  const response = await api.post('/github/push', { 
+    owner, repo, filePath, content, commitMessage, branch 
+  });
   return response.data;
 };
 

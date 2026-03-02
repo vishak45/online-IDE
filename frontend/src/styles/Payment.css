@@ -1,0 +1,254 @@
+/* Payment Modal Styles */
+.payment-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.payment-modal {
+  background-color: var(--bg-secondary);
+  border-radius: 12px;
+  width: 90%;
+  max-width: 420px;
+  overflow: hidden;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+}
+
+.payment-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-color);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.payment-modal-header h3 {
+  margin: 0;
+  font-size: 20px;
+  color: white;
+}
+
+.payment-modal-header .close-btn {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.payment-modal-header .close-btn:hover {
+  color: white;
+}
+
+.payment-modal-content {
+  padding: 24px;
+}
+
+/* Premium Features List */
+.premium-features {
+  margin-bottom: 24px;
+}
+
+.premium-features h4 {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  color: var(--text-primary);
+}
+
+.premium-features ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.premium-features li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.premium-features li:last-child {
+  border-bottom: none;
+}
+
+.check-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background-color: #27ca40;
+  color: white;
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* Price Section */
+.price-section {
+  text-align: center;
+  padding: 20px;
+  background-color: var(--bg-tertiary);
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.price {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px;
+}
+
+.currency {
+  font-size: 24px;
+  color: var(--text-secondary);
+}
+
+.amount {
+  font-size: 56px;
+  font-weight: bold;
+  color: var(--accent-primary);
+  line-height: 1;
+}
+
+.period {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-left: 8px;
+}
+
+.price-note {
+  margin: 12px 0 0 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+/* Error Message */
+.error-message {
+  background-color: rgba(255, 95, 86, 0.1);
+  border: 1px solid #ff5f56;
+  color: #ff5f56;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+/* Payment Buttons */
+.payment-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.btn-pay {
+  padding: 14px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  color: white;
+}
+
+.btn-pay:hover {
+  opacity: 0.9;
+}
+
+.btn-pay:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-demo {
+  padding: 10px 16px;
+  background-color: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.btn-demo:hover {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.secure-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.lock-icon {
+  font-size: 14px;
+}
+
+/* Processing Section */
+.processing-section {
+  text-align: center;
+  padding: 40px;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid var(--border-color);
+  border-top-color: var(--accent-primary);
+  border-radius: 50%;
+  margin: 0 auto 20px auto;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.processing-section p {
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* Success Section */
+.success-section {
+  text-align: center;
+  padding: 40px;
+}
+
+.success-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  background-color: #27ca40;
+  color: white;
+  border-radius: 50%;
+  font-size: 32px;
+  font-weight: bold;
+  margin: 0 auto 20px auto;
+}
+
+.success-section h4 {
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  color: var(--text-primary);
+}
+
+.success-section p {
+  margin: 0;
+  color: var(--text-secondary);
+}

@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 const executeRoutes = require('./routes/execute');
 const filesRoutes = require('./routes/files');
 const authRoutes = require('./routes/auth');
+const githubRoutes = require('./routes/github');
+const paymentRoutes = require('./routes/payment');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -18,6 +20,8 @@ app.use(express.json({ limit: '10mb' }));
 app.use('/api/execute', executeRoutes);
 app.use('/api/files', filesRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/github', githubRoutes);
+app.use('/api/payment', paymentRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
